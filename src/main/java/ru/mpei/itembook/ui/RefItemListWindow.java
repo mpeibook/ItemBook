@@ -31,12 +31,16 @@ public class RefItemListWindow extends Window {
 		this.refItemRepository = refItemRepository;
 		
 		setCaption("Ref Item List");
+		setWidth("50%");
+		setHeight("50%");
 		center();
 		
 		Button add = new Button("Add", VaadinIcons.PLUS);
+		add.setSizeUndefined();
 		add.addClickListener(e -> showRefItemFormWindow(new RefItem()));
 		
 		grid = new Grid<>();
+		grid.setSizeFull();
 		grid.addColumn(e -> "Edit", new ButtonRenderer<>(e -> showRefItemFormWindow(e.getItem())));
 		grid.addColumn(RefItem::getId).setCaption("Id");
 		grid.addColumn(RefItem::getCode).setCaption("Code");
@@ -44,7 +48,9 @@ public class RefItemListWindow extends Window {
 		grid.setItems(refItemRepository.findAll());
 		
 		VerticalLayout layout = new VerticalLayout();
+		layout.setSizeFull();
 		layout.addComponents(add, grid);
+		layout.setExpandRatio(grid, 1.0f);
 		setContent(layout);
 	}
 	

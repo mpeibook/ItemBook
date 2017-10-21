@@ -31,12 +31,16 @@ public class RefPlaceListWindow extends Window {
 		this.refPlaceRepository = refPlaceRepository;
 		
 		setCaption("Ref Place List");
+		setWidth("50%");
+		setHeight("50%");
 		center();
 		
 		Button add = new Button("Add", VaadinIcons.PLUS);
+		add.setSizeUndefined();
 		add.addClickListener(e -> showRefPlaceFormWindow(new RefPlace()));
 		
 		grid = new Grid<>();
+		grid.setSizeFull();
 		grid.addColumn(e -> "Edit", new ButtonRenderer<>(e -> showRefPlaceFormWindow(e.getItem())));
 		grid.addColumn(RefPlace::getId).setCaption("Id");
 		grid.addColumn(RefPlace::getCode).setCaption("Code");
@@ -44,7 +48,9 @@ public class RefPlaceListWindow extends Window {
 		grid.setItems(refPlaceRepository.findAll());
 		
 		VerticalLayout layout = new VerticalLayout();
+		layout.setSizeFull();
 		layout.addComponents(add, grid);
+		layout.setExpandRatio(grid, 1.0f);
 		setContent(layout);
 	}
 	

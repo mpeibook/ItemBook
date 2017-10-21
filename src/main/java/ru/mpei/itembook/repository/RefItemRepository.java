@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import ru.mpei.itembook.model.RefItem;
 
-public interface RefItemRepository extends JpaRepository<RefItem, Integer> { }
+public interface RefItemRepository extends JpaRepository<RefItem, Integer> {
+	public RefItem findByCode(String code);
+}

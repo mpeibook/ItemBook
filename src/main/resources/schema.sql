@@ -1,28 +1,31 @@
 create table ref_item (
-  id int auto_increment primary key,
-  code varchar(10),
+  id int auto_increment not null primary key,
+  code varchar(10) not null unique,
   name varchar(50)
 );
 
 create table ref_place (
-  id int auto_increment primary key,
-  code varchar(10),
+  id int auto_increment not null primary key,
+  code varchar(10) not null unique,
   name varchar(50)
 );
 
 create table doc_move (
-  id int auto_increment primary key,
-  doc_date timestamp,
-  doc_num varchar(10),
+  id int auto_increment not null primary key,
+  doc_date timestamp not null,
+  doc_year int as (extract(year from doc_date)),
+  doc_num varchar(10) not null,
   ref_place_from_id int references ref_place (id),
   ref_place_to_id int references ref_place (id)
 );
 
+alter table doc_move add constraint doc_move_uk unique (doc_year, doc_num);
+
 create table doc_move_tab (
-  id int auto_increment primary key,
+  id int auto_increment not null primary key,
   doc_move_id int not null references doc_move (id),
   ref_item_id int not null references ref_item (id),
-  quantity int
+  quantity int not null check (quantity > 0)
 );
 
 create view rep_item_balance_v as

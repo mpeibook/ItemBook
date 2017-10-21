@@ -15,6 +15,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -75,11 +76,14 @@ public class DocMoveFormWindow extends Window {
 		binder.forField(placeTo).bind(DocMove::getRefPlaceTo, DocMove::setRefPlaceTo);
 		
 		setCaption("Doc Move Form");
+		setWidth("50%");
+		setHeight("50%");
 		center();
 		
 		placeFrom.setItemCaptionGenerator(RefPlace::getName);
 		placeTo.setItemCaptionGenerator(RefPlace::getName);
 		
+		docMoveTabGrid.setSizeFull();
 		docMoveTabGrid.addColumn(DocMoveTab::getId).setCaption("Id");
 		
 		Binder<DocMoveTab> rowBinder = docMoveTabGrid.getEditor().getBinder();
@@ -115,8 +119,14 @@ public class DocMoveFormWindow extends Window {
 		deleteButton.addClickListener(e -> delete());
 		
 		VerticalLayout layout = new VerticalLayout();
+		layout.setSizeFull();
 		layout.setSpacing(true);
-		layout.addComponents(id, date, number, placeFrom, placeTo, addRowButton, docMoveTabGrid, actions);
+		
+		FormLayout formLayout = new FormLayout();
+		formLayout.addComponents(id, date, number, placeFrom, placeTo);
+		
+		layout.addComponents(formLayout, addRowButton, docMoveTabGrid, actions);
+		layout.setExpandRatio(docMoveTabGrid, 1.0f);
 		setContent(layout);
 	}
 	

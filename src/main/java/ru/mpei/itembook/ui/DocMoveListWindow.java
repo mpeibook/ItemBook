@@ -30,9 +30,12 @@ public class DocMoveListWindow extends Window {
 	public DocMoveListWindow(DocMoveRepository docMoveRepository) {
 		this.docMoveRepository = docMoveRepository;
 		setCaption("Doc Move List");
+		setWidth("50%");
+		setHeight("50%");
 		center();
 		
 		grid = new Grid<>();
+		grid.setSizeFull();
 		grid.setItems(docMoveRepository.findAll());
 		grid.addColumn(e -> "Edit", new ButtonRenderer<>(e -> showDocMoveFormWindow(e.getItem())));
 		grid.addColumn(DocMove::getId).setCaption("Id");
@@ -42,10 +45,13 @@ public class DocMoveListWindow extends Window {
 		grid.addColumn(place -> (place.getRefPlaceTo() != null ? place.getRefPlaceTo().getName() : null)).setCaption("Place to");
 		
 		Button add = new Button("Add", VaadinIcons.PLUS);
+		add.setSizeUndefined();
 		add.addClickListener(e -> showDocMoveFormWindow(new DocMove()));
 		
 		VerticalLayout layout = new VerticalLayout();
+		layout.setSizeFull();
 		layout.addComponents(add, grid);
+		layout.setExpandRatio(grid, 1.0f);
 		setContent(layout);
 	}
 	

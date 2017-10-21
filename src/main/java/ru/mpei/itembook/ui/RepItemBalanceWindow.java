@@ -16,9 +16,13 @@ public class RepItemBalanceWindow extends Window {
 	
 	public RepItemBalanceWindow(RepItemBalanceRepository repItemBalanceRepository) {
 		setCaption("Rep Item Balance");
+		setWidth("50%");
+		setHeight("50%");
 		center();
 		
 		Grid<RepItemBalance> grid = new Grid<>();
+		grid.setWidth("100%");
+		grid.setHeight("100%");
 		grid.addColumn(e -> e.getRefPlace().getName()).setCaption("Place");
 		grid.addColumn(e -> e.getRefItem().getName()).setCaption("Item");
 		grid.addColumn(RepItemBalance::getQuantity).setCaption("Quantity");
